@@ -12,6 +12,7 @@ function App() {
     y: "0px",
   });
   const [currentGif, setCurrentGif] = useState(topegiHappy);
+  const [showNo, setShowNo] = useState(true);
 
   const handleNoClick = () => {
     const newX = Math.random() * 500 - 200 + "px";
@@ -26,6 +27,7 @@ function App() {
     setCurrentGif((prev) =>
       prev === topegiLove ? topegiHappyLove : topegiLove,
     );
+    setShowNo(false);
   };
 
   return (
@@ -42,15 +44,17 @@ function App() {
         <button className="button-yes" onClick={handleYesClick}>
           Yes
         </button>
-        <button
-          className="button-no"
-          onClick={handleNoClick}
-          style={{
-            transform: `translate(${noButtonTransform.x}, ${noButtonTransform.y})`,
-          }}
-        >
-          No :(
-        </button>
+        {showNo && (
+          <button
+            className="button-no"
+            onClick={handleNoClick}
+            style={{
+              transform: `translate(${noButtonTransform.x}, ${noButtonTransform.y})`,
+            }}
+          >
+            No :(
+          </button>
+        )}
       </div>
     </div>
   );
