@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import topegiHappy from "./assets/topegi-happy.gif";
+import topegiCries from "./assets/togepi-cries.gif";
+import sadTopegiWaving from "./assets/sad-topegi-waving.gif";
+import topegiHappyLove from "./assets/topegi-happy-love.gif";
+import topegiLove from "./assets/topegi-love.gif";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [noButtonTransform, setNoButtonTransform] = useState({
+    x: "0px",
+    y: "0px",
+  });
+  const [currentGif, setCurrentGif] = useState(topegiHappy);
+
+  const handleNoClick = () => {
+    const newX = Math.random() * 500 - 200 + "px";
+    const newY = Math.random() * 500 - 200 + "px";
+    setNoButtonTransform({ x: newX, y: newY });
+    setCurrentGif((prev) =>
+      prev === topegiCries ? sadTopegiWaving : topegiCries,
+    );
+  };
+
+  const handleYesClick = () => {
+    setCurrentGif((prev) =>
+      prev === topegiLove ? topegiHappyLove : topegiLove,
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <div className="static-content">
+        <h1>Will you be my Valentine Goppi?</h1>
+        <img
+          src={currentGif}
+          alt="Gif"
+          style={{ width: "300px", height: "300px", objectFit: "contain" }}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <div className="button-container">
+        <button className="button-yes" onClick={handleYesClick}>
+          Yes
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button
+          className="button-no"
+          onClick={handleNoClick}
+          style={{
+            transform: `translate(${noButtonTransform.x}, ${noButtonTransform.y})`,
+          }}
+        >
+          No :(
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
